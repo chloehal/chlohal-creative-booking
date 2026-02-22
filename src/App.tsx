@@ -7,6 +7,7 @@ import { CalendarDays } from "lucide-react";
 import Index from "./pages/Index";
 import Couture from "./pages/Couture";
 import Linogravure from "./pages/Linogravure";
+import FleursEnPerles from "./pages/FleursEnPerles";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/couture" element={<Couture />} />
           <Route path="/linogravure" element={<Linogravure />} />
+          <Route path="/fleurs-en-perles" element={<FleursEnPerles />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

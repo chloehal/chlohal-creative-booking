@@ -2,7 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Reviews } from "@/components/Reviews";
 import { ReviewForm } from "@/components/ReviewForm";
 import { Link } from "react-router-dom";
-import { Scissors, Palette, Star } from "lucide-react";
+import { Scissors, Palette, Star, Gem } from "lucide-react";
 import { useState } from "react";
 
 const Index = () => {
@@ -61,7 +61,7 @@ const Index = () => {
             Les Ateliers proposés
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Couture */}
             <div className="card bg-base-100 border border-base-300">
               <figure className="px-8 pt-8">
@@ -114,6 +114,38 @@ const Index = () => {
                 </div>
                 <div className="card-actions mt-4">
                   <Link to="/linogravure" className="btn btn-primary btn-sm">
+                    Découvrir et réserver
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Fleurs en Perles */}
+            <div className="card bg-base-100 border border-base-300">
+              <figure className="px-8 pt-8">
+                <div className="bg-primary/10 rounded-box p-6 w-full flex justify-center">
+                  <Gem className="w-12 h-12 text-primary" />
+                </div>
+              </figure>
+              <div className="card-body items-center text-center">
+                <h3 className="card-title font-serif text-primary">
+                  Atelier Fleurs en Perles
+                </h3>
+                <p className="text-sm">
+                  Créez des fleurs éternelles en assemblant des perles sur du
+                  fil de laiton. Un atelier minutieux et zen pour 1 à 6
+                  personnes, repartez avec une composition florale unique.
+                </p>
+                <div className="flex gap-4 mt-3 text-sm">
+                  <span>3h</span>
+                  <span className="font-semibold text-primary">dès 40€</span>
+                  <span>1-6 pers.</span>
+                </div>
+                <div className="card-actions mt-4">
+                  <Link
+                    to="/fleurs-en-perles"
+                    className="btn btn-primary btn-sm"
+                  >
                     Découvrir et réserver
                   </Link>
                 </div>

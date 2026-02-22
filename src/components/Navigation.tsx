@@ -42,10 +42,9 @@ export const Navigation = () => {
                   </Link>
                 </li>
                 <li>
-                  <span className="opacity-50 cursor-default flex items-center gap-2">
+                  <Link to="/fleurs-en-perles" className={isActive("/fleurs-en-perles") ? "active" : ""}>
                     Fleurs en Perles
-                    <span className="badge badge-sm badge-primary">Bientôt</span>
-                  </span>
+                  </Link>
                 </li>
                 <li>
                   <span className="opacity-50 cursor-default flex items-center gap-2">
@@ -89,10 +88,9 @@ export const Navigation = () => {
             </Link>
           </li>
           <li>
-            <span className="opacity-50 cursor-default flex items-center gap-2">
+            <Link to="/fleurs-en-perles" onClick={closeDrawer} className={isActive("/fleurs-en-perles") ? "active" : ""}>
               Fleurs en Perles
-              <span className="badge badge-sm badge-primary">Bientôt</span>
-            </span>
+            </Link>
           </li>
           <li>
             <span className="opacity-50 cursor-default flex items-center gap-2">
