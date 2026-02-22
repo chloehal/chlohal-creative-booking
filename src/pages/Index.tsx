@@ -182,7 +182,7 @@ const Index = () => {
             </div>
           )}
 
-          <Reviews limit={6} />
+          <Reviews />
         </div>
       </section>
 
