@@ -29,8 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             WHERE approved = 1";
 
     $params = [];
-    if ($workshop_type && in_array($workshop_type, ['couture', 'linogravure', 'both'])) {
-        $sql .= " AND (workshop_type = :wt OR workshop_type = 'both')";
+    if ($workshop_type && in_array($workshop_type, ['couture', 'linogravure', 'fleurs-en-perles', 'plusieurs'])) {
+        if (in_array($workshop_type, ['couture', 'linogravure'])) {
+            $sql .= " AND (workshop_type = :wt OR workshop_type = 'plusieurs')";
+        } else {
+            $sql .= " AND workshop_type = :wt";
+        }
         $params[':wt'] = $workshop_type;
     }
 
@@ -57,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $workshop_type = $data['workshop_type'];
 
     if (strlen($name) > 100 || $rating < 1 || $rating > 5 || strlen($comment) > 1000
-        || !in_array($workshop_type, ['couture', 'linogravure', 'both'])) {
+        || !in_array($workshop_type, ['couture', 'linogravure', 'fleurs-en-perles', 'plusieurs'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Données invalides']);
         exit();
