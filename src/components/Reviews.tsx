@@ -3,7 +3,7 @@ import { ReviewCard } from "./ReviewCard";
 import { Loader2 } from "lucide-react";
 
 interface ReviewsProps {
-  workshopType?: "couture" | "linogravure";
+  workshopType?: "couture" | "linogravure" | "fleurs-en-perles";
   limit?: number;
 }
 

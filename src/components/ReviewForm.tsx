@@ -3,29 +3,54 @@ import { useSubmitReview } from "@/hooks/useReviews";
 import { Star, Loader2 } from "lucide-react";
 import type { ReviewSubmission } from "@/types/reviews";
 
+type WorkshopValue = "couture" | "linogravure" | "fleurs-en-perles";
+
+const WORKSHOP_OPTIONS: { value: WorkshopValue; label: string }[] = [
+  { value: "couture", label: "Couture" },
+  { value: "linogravure", label: "Linogravure" },
+  { value: "fleurs-en-perles", label: "Fleurs en Perles" },
+];
+
 interface ReviewFormProps {
-  workshopType?: "couture" | "linogravure";
+  workshopType?: WorkshopValue;
   onSuccess?: () => void;
 }
 
 export const ReviewForm = ({ workshopType, onSuccess }: ReviewFormProps) => {
-  const [formData, setFormData] = useState<ReviewSubmission>({
+  const [formData, setFormData] = useState<Omit<ReviewSubmission, "workshop_type">>({
     name: "",
     rating: 5,
     comment: "",
-    workshop_type: workshopType || "both",
   });
+  const [selectedWorkshops, setSelectedWorkshops] = useState<WorkshopValue[]>(
+    workshopType ? [workshopType] : []
+  );
   const [hoveredRating, setHoveredRating] = useState(0);
   const { mutate: submit, isPending, isSuccess, error } = useSubmitReview();
 
+  const toggleWorkshop = (value: WorkshopValue) => {
+    setSelectedWorkshops((prev) =>
+      prev.includes(value) ? prev.filter((w) => w !== value) : [...prev, value]
+    );
+  };
+
+  const getWorkshopType = (): ReviewSubmission["workshop_type"] => {
+    if (selectedWorkshops.length === 1) return selectedWorkshops[0];
+    return "plusieurs";
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submit(formData, {
-      onSuccess: () => {
-        setFormData({ name: "", rating: 5, comment: "", workshop_type: workshopType || "both" });
-        onSuccess?.();
-      },
-    });
+    submit(
+      { ...formData, workshop_type: getWorkshopType() },
+      {
+        onSuccess: () => {
+          setFormData({ name: "", rating: 5, comment: "" });
+          setSelectedWorkshops(workshopType ? [workshopType] : []);
+          onSuccess?.();
+        },
+      }
+    );
   };
 
   if (isSuccess) {
@@ -93,23 +118,25 @@ export const ReviewForm = ({ workshopType, onSuccess }: ReviewFormProps) => {
       {!workshopType && (
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Atelier suivi</span>
+            <span className="label-text">Atelier(s) suivi(s)</span>
           </label>
-          <select
-            className="select select-bordered"
-            value={formData.workshop_type}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                workshop_type: e.target.value as ReviewSubmission["workshop_type"],
-              })
-            }
-            disabled={isPending}
-          >
-            <option value="couture">Couture</option>
-            <option value="linogravure">Linogravure</option>
-            <option value="both">Les deux</option>
-          </select>
+          <div className="flex flex-wrap gap-3">
+            {WORKSHOP_OPTIONS.map(({ value, label }) => (
+              <label key={value} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="checkbox checkbox-primary checkbox-sm"
+                  checked={selectedWorkshops.includes(value)}
+                  onChange={() => toggleWorkshop(value)}
+                  disabled={isPending}
+                />
+                <span className="text-sm">{label}</span>
+              </label>
+            ))}
+          </div>
+          {selectedWorkshops.length === 0 && (
+            <p className="text-xs text-error mt-1">Sélectionnez au moins un atelier.</p>
+          )}
         </div>
       )}
 
@@ -119,7 +146,7 @@ export const ReviewForm = ({ workshopType, onSuccess }: ReviewFormProps) => {
         </label>
         <textarea
           className="textarea textarea-bordered h-24"
-          placeholder="Partagez votre experience..."
+          placeholder="Partagez votre expérience..."
           value={formData.comment}
           onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
           required
@@ -131,7 +158,11 @@ export const ReviewForm = ({ workshopType, onSuccess }: ReviewFormProps) => {
         </label>
       </div>
 
-      <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
+      <button
+        type="submit"
+        className="btn btn-primary w-full"
+        disabled={isPending || (!workshopType && selectedWorkshops.length === 0)}
+      >
         {isPending ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" />

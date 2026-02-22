@@ -1,4 +1,6 @@
 import { Navigation } from "@/components/Navigation";
+import { Reviews } from "@/components/Reviews";
+import { ReviewForm } from "@/components/ReviewForm";
 import {
   Clock,
   Users,
@@ -7,8 +9,10 @@ import {
   Package,
   CheckCircle2,
 } from "lucide-react";
+import { useState } from "react";
 
 const FleursEnPerles = () => {
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -194,6 +198,34 @@ const FleursEnPerles = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Reviews */}
+      <section className="py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-3">
+            <h2 className="text-xl font-bold font-serif text-primary">Avis</h2>
+            <button
+              className="btn btn-outline btn-primary btn-sm"
+              onClick={() => setShowReviewForm(!showReviewForm)}
+            >
+              Laisser un avis
+            </button>
+          </div>
+
+          {showReviewForm && (
+            <div className="card bg-base-100 border border-base-300 mb-6">
+              <div className="card-body">
+                <ReviewForm
+                  workshopType="fleurs-en-perles"
+                  onSuccess={() => setShowReviewForm(false)}
+                />
+              </div>
+            </div>
+          )}
+
+          <Reviews workshopType="fleurs-en-perles" />
         </div>
       </section>
 

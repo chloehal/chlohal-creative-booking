@@ -3,7 +3,7 @@ export interface Review {
   name: string;
   rating: number;
   comment: string;
-  workshop_type: "couture" | "linogravure" | "both";
+  workshop_type: "couture" | "linogravure" | "fleurs-en-perles" | "plusieurs";
   created_at: string;
 }
 
@@ -11,5 +11,5 @@ export interface ReviewSubmission {
   name: string;
   rating: number;
   comment: string;
-  workshop_type: "couture" | "linogravure" | "both";
+  workshop_type: "couture" | "linogravure" | "fleurs-en-perles" | "plusieurs";
 }

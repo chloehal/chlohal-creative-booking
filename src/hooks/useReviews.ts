@@ -3,7 +3,7 @@ import type { Review, ReviewSubmission } from "@/types/reviews";
 
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 
-export const useReviews = (workshopType?: "couture" | "linogravure") => {
+export const useReviews = (workshopType?: "couture" | "linogravure" | "fleurs-en-perles") => {
   return useQuery<Review[]>({
     queryKey: ["reviews", workshopType],
     queryFn: async () => {

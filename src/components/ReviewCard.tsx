@@ -4,7 +4,8 @@ import type { Review } from "@/types/reviews";
 const WORKSHOP_LABELS: Record<string, string> = {
   couture: "Couture",
   linogravure: "Linogravure",
-  both: "Les deux ateliers",
+  "fleurs-en-perles": "Fleurs en Perles",
+  plusieurs: "Plusieurs ateliers",
 };
 
 export const ReviewCard = ({ review }: { review: Review }) => {
