@@ -1,6 +1,6 @@
 import { useReviews } from "@/hooks/useReviews";
 import { ReviewCard } from "./ReviewCard";
-import { Loader2 } from "lucide-react";
+import { Loader2, Star } from "lucide-react";
 
 interface ReviewsProps {
   workshopType?: "couture" | "linogravure" | "fleurs-en-perles";
@@ -36,11 +36,45 @@ export const Reviews = ({ workshopType, limit }: ReviewsProps) => {
     );
   }
 
+  const avgRating =
+    displayed.reduce((sum, r) => sum + r.rating, 0) / displayed.length;
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {displayed.map((review) => (
-        <ReviewCard key={review.id} review={review} />
-      ))}
+    <div>
+      {/* Summary bar */}
+      <div className="flex flex-wrap items-center gap-4 mb-8 p-4 rounded-lg bg-base-200">
+        <div className="flex items-center gap-2">
+          <span className="text-3xl font-bold font-serif text-base-content">
+            {avgRating.toFixed(1)}
+          </span>
+          <div className="flex flex-col">
+            <div className="flex gap-0.5">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star
+                  key={i}
+                  className={`w-3.5 h-3.5 ${
+                    i <= Math.round(avgRating)
+                      ? "fill-warning text-warning"
+                      : "text-base-content/15"
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-base-content/50">
+              {displayed.length} avis
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Cards */}
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+        {displayed.map((review) => (
+          <div key={review.id} className="break-inside-avoid">
+            <ReviewCard review={review} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
