@@ -7,3 +7,27 @@
     @apply font-sans;
   }
 }
+
+@keyframes fly-card {
+  from {
+    transform: translateY(110vh) rotate(var(--card-rotate, 0deg));
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--card-opacity, 0.15);
+  }
+  92% {
+    opacity: var(--card-opacity, 0.15);
+  }
+  to {
+    transform: translateY(-110vh) rotate(var(--card-rotate, 0deg));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fly-card {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
