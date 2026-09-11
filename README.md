@@ -41,3 +41,7 @@ npm run build
 ```bash
 npm run preview
 ```
+
+## Archive des avis
+
+Les [10 avis sauvegardés le 11 septembre 2026](archives/avis/2026-09-11/README.md) sont conservés en Markdown et dans leur export SQL original.
